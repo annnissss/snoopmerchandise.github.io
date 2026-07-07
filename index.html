@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEANUTS - Merchant Portal</title>
+    <link rel="shortcut icon" type="image/jpg" href="logo.webp">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #ffffff; color: #000000; font-family: 'Space Grotesk', system-ui, sans-serif; }
+        .top-accent-banner { background-color: #FFCC00; height: 35px; width: 100%; }
+        .login-card { border: 2px solid #000000; border-radius: 0px; background-color: #ffffff; max-width: 440px; width: 100%; }
+        .btn-custom { background-color: #000000; color: #ffffff; font-family: 'Oswald', sans-serif; text-transform: uppercase; border-radius: 0px; font-weight: 600; letter-spacing: 0.05rem; border: 2px solid #000000; transition: all 0.2s ease; }
+        .btn-custom:hover { background-color: #FFCC00; color: #000000; border-color: #000000; }
+        .form-control { border: 2px solid #000000; border-radius: 0px; padding: 10px 12px; }
+        .form-control:focus { border-color: #FFCC00; box-shadow: none; }
+        .input-group-text { border: 2px solid #000000; border-radius: 0px; background-color: #ffffff; }
+        h1, h2, h3, .peanuts-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        a { color: #000000; text-decoration: underline; cursor: pointer; }
+        a:hover { color: #FFCC00; }
+        .feedback-box { border: 2px solid #000000; border-radius: 0px; font-weight: bold; }
+    </style>
+</head>
+<body class="d-flex flex-column vh-100">
+    <div class="top-accent-banner"></div>
+    <div class="container flex-grow-1 d-flex align-items-center justify-content-center my-5">
+        <div class="card login-card p-5 shadow-sm">
+            <div class="text-center mb-4">
+                <img src="https://peanuts.store/cdn/shop/files/Final_Logo_Color_-_Lockup_-_Horizontal_-_Dark-min_300x@2x.png?v=1689795143" alt="PEANUTS" style="max-height: 52px; width: auto; object-fit: contain;">
+            </div>
+            
+            <div id="error-feedback" class="alert alert-danger d-none feedback-box text-center small text-uppercase mb-3"></div>
+            <div id="success-feedback" class="alert alert-success d-none feedback-box text-center small text-uppercase mb-3"></div>
+
+            <div id="login-view">
+                <div class="text-center mb-4">
+                    <p class="text-uppercase small fw-bold tracking-wider text-muted mb-0" style="font-size: 0.75rem;">75th Anniversary Merchant Control Center</p>
+                </div>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label class="form-label text-uppercase small fw-bold">Merchant Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                            <input type="text" id="username" class="form-control" placeholder="Enter username" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-uppercase small fw-bold">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                        </div>
+                        <div class="text-end mt-1">
+                            <a id="to-forgot-link" class="small fw-bold text-uppercase peanuts-font" style="font-size: 0.75rem;">Forgot Password?</a>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-custom w-100 py-2 fs-5 mb-3">Sign In <i class="fa-solid fa-arrow-right-to-bracket ms-2"></i></button>
+                    <div class="text-center">
+                        <span class="small text-muted">New user?</span> 
+                        <a id="to-register-link" class="small fw-bold ms-1 text-uppercase peanuts-font">Create an Account</a>
+                    </div>
+                </form>
+            </div>
+
+            <div id="register-view" class="d-none">
+                <div class="text-center mb-4">
+                    <h2 class="h4 fw-bold mb-1">Create Account</h2>
+                    <p class="text-uppercase small text-muted fw-bold tracking-wider" style="font-size: 0.7rem;">Join the SnoopsShop Platform</p>
+                </div>
+                <form id="registerForm">
+                    <div class="mb-3">
+                        <label class="form-label text-uppercase small fw-bold">Full Name</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-id-card"></i></span>
+                            <input type="text" class="form-control" placeholder="Your full name" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-uppercase small fw-bold">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                            <input type="email" class="form-control" placeholder="your.email@example.com" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-uppercase small fw-bold">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                            <input type="text" class="form-control" placeholder="new_username" required>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-uppercase small fw-bold">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-lock"></i></span>
+                            <input type="password" class="form-control" placeholder="••••••••" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-custom w-100 py-2 fs-5 mb-3">Register Account <i class="fa-solid fa-user-plus ms-2"></i></button>
+                    <div class="text-center">
+                        <span class="small text-muted">Already a merchant?</span> 
+                        <a id="to-login-link" class="small fw-bold ms-1 text-uppercase peanuts-font">Sign In Here</a>
+                    </div>
+                </form>
+            </div>
+
+            <div id="forgot-view" class="d-none">
+                <div class="text-center mb-4">
+                    <h2 class="h4 fw-bold mb-1">Reset Password</h2>
+                    <p class="text-uppercase small text-muted fw-bold tracking-wider" style="font-size: 0.7rem;">Recover your account</p>
+                </div>
+                <form id="forgotForm">
+                    <div class="mb-4">
+                        <label class="form-label text-uppercase small fw-bold">Merchant Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-envelope"></i></span>
+                            <input type="email" class="form-control" placeholder="Enter your registered email" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-custom w-100 py-2 fs-5 mb-3">Reset Password <i class="fa-solid fa-paper-plane ms-2"></i></button>
+                    <div class="text-center">
+                        <span class="small text-muted">Remembered your password?</span> 
+                        <a id="forgot-to-login-link" class="small fw-bold ms-1 text-uppercase peanuts-font">Sign In Here</a>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+    
+    <footer class="py-4 border-top border-dark bg-white mt-auto">
+        <div class="container text-center">
+            <p class="mb-1 small fw-bold text-uppercase tracking-wider peanuts-font">&copy; Anis Farhana merch PLATFORM | IMS566 DEVELOPMENT</p>
+        </div>
+    </footer>
+
+    <script>
+        const loginView = document.getElementById('login-view');
+        const registerView = document.getElementById('register-view');
+        const forgotView = document.getElementById('forgot-view');
+
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const forgotForm = document.getElementById('forgotForm');
+
+        const errorFeedback = document.getElementById('error-feedback');
+        const successFeedback = document.getElementById('success-feedback');
+        // Login, Register & Forgot)
+        if (document.getElementById('to-register-link')) {
+            document.getElementById('to-register-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                loginView.classList.add('d-none');
+                registerView.classList.remove('d-none');
+                if (forgotView) forgotView.classList.add('d-none');
+                errorFeedback.classList.add('d-none');
+                successFeedback.classList.add('d-none');
+            });
+        }
+
+        if (document.getElementById('to-login-link')) {
+            document.getElementById('to-login-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                registerView.classList.add('d-none');
+                if (forgotView) forgotView.classList.add('d-none');
+                loginView.classList.remove('d-none');
+                errorFeedback.classList.add('d-none');
+                successFeedback.classList.add('d-none');
+            });
+        }
+
+        if (document.getElementById('to-forgot-link')) {
+            document.getElementById('to-forgot-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                loginView.classList.add('d-none');
+                registerView.classList.add('d-none');
+                forgotView.classList.remove('d-none');
+                errorFeedback.classList.add('d-none');
+                successFeedback.classList.add('d-none');
+            });
+        }
+
+        if (document.getElementById('forgot-to-login-link')) {
+            document.getElementById('forgot-to-login-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                forgotView.classList.add('d-none');
+                registerView.classList.add('d-none');
+                loginView.classList.remove('d-none');
+                errorFeedback.classList.add('d-none');
+                successFeedback.classList.add('d-none');
+            });
+        }
+
+        //  BUTTON 'SIGN IN'
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const usernameInput = document.getElementById('username').value;
+                const passwordInput = document.getElementById('password').value;
+
+                const registeredUser = localStorage.getItem('merchant_username');
+                const registeredPass = localStorage.getItem('merchant_password');
+
+                if ((usernameInput === "admin@snoopshop.com" && passwordInput === "password123") || 
+                    (registeredUser && usernameInput === registeredUser && passwordInput === registeredPass)) {
+                    
+                    localStorage.setItem('isLoggedIn', 'true');
+                    
+                    errorFeedback.classList.add('d-none');
+                    window.location.href = "dashboard.html";
+                } else {
+                    errorFeedback.textContent = "INVALID CREDENTIALS. PLEASE TRY AGAIN.";
+                    errorFeedback.classList.remove('d-none');
+                    successFeedback.classList.add('d-none');
+                }
+            });
+        }
+
+        //  BUTTON 'REGISTER ACCOUNT'
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const usernameReg = registerForm.querySelector('input[placeholder="new_username"]').value;
+                const passwordReg = registerForm.querySelector('input[placeholder="••••••••"]').value;
+
+                localStorage.setItem('merchant_username', usernameReg);
+                localStorage.setItem('merchant_password', passwordReg);
+                
+                localStorage.removeItem('isLoggedIn');
+
+                successFeedback.textContent = "REGISTRATION SUCCESSFUL! PLEASE SIGN IN TO CONTINUE.";
+                successFeedback.classList.remove('d-none');
+                errorFeedback.classList.add('d-none');
+
+                registerForm.reset();
+
+                setTimeout(function() {
+                    registerView.classList.add('d-none');
+                    loginView.classList.remove('d-none');
+                    successFeedback.classList.add('d-none');
+                }, 2000);
+            });
+        }
+
+        // BUTTON 'RESET PASSWORD'
+        if (forgotForm) {
+            forgotForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                successFeedback.textContent = "PASSWORD RESET LINK HAS BEEN SENT TO YOUR EMAIL!";
+                successFeedback.classList.remove('d-none');
+                errorFeedback.classList.add('d-none');
+
+                setTimeout(function() {
+                    forgotView.classList.add('d-none');
+                    loginView.classList.remove('d-none');
+                    successFeedback.classList.add('d-none');
+                }, 2000);
+            });
+        }
+    </script>
+	<script src="data.js"></script>
+</body>
+</html>

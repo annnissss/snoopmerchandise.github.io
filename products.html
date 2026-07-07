@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PEANUTS - Merchandise Storefront</title>
+    <link rel="shortcut icon" type="image/jpg" href="logo.webp">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { background-color: #ffffff; color: #000000; font-family: 'Space Grotesk', system-ui, sans-serif; }
+        .top-accent-banner { background-color: #FFCC00; height: 35px; width: 100%; }
+        
+        /* Navbar Styling */
+        .navbar-custom { background-color: #000000; padding: 0.5rem 0; }
+        .navbar-brand-logo { height: 42px; width: auto; object-fit: contain; }
+        
+        .nav-link { font-family: 'Oswald', sans-serif; color: #ffffff !important; font-size: 1.1rem; font-weight: 600; letter-spacing: 0.05rem; text-transform: uppercase; padding: 0.5rem 1.2rem !important; }
+        .nav-link:hover { color: #FFCC00 !important; }
+        .nav-link.active { border-bottom: 4px solid #FFCC00; color: #FFCC00 !important; }
+        
+        h1, h2, h3, .peanuts-font { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+        .card-minimalist { border: 2px solid #000000; border-radius: 0px; background-color: #ffffff; transition: transform 0.2s; }
+        .card-minimalist:hover { transform: translateY(-3px); }
+        
+        .product-image-frame { 
+            background-color: #f8f9fa; 
+            height: 240px; 
+            border-bottom: 2px solid #000000; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden; 
+            padding: 15px; 
+        }
+        .product-img-element {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        .badge-stock { background-color: #000000; color: #ffffff; border-radius: 0px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; }
+        
+        /* Custom Button Theme */
+        .btn-custom { background-color: #000000; color: #ffffff; font-family: 'Oswald', sans-serif; text-transform: uppercase; border-radius: 0px; font-weight: 600; border: 2px solid #000000; transition: all 0.2s ease; }
+        .btn-custom:hover { background-color: #FFCC00; color: #000000; border-color: #000000; }
+        
+        /* Input Box Style */
+        .form-control, .form-select { border: 2px solid #000000; border-radius: 0px; padding: 10px 12px; }
+        .form-control:focus, .form-select:focus { border-color: #FFCC00; box-shadow: none; }
+        
+        /* Modal Modification */
+        .modal-content { border: 3px solid #000000; border-radius: 0px; }
+        .modal-header { border-bottom: 2px solid #000000; background-color: #FFCC00; border-radius: 0px; color: #000000; }
+        .btn-close-custom { border: 2px solid #000000; background: none; font-weight: bold; font-size: 1.2rem; cursor: pointer; }
+    </style>
+</head>
+<body class="d-flex flex-column vh-100">
+
+    <div class="top-accent-banner"></div>
+
+    <nav class="navbar navbar-expand-lg navbar-custom shadow-sm">
+        <div class="container align-items-center">
+            <a class="navbar-brand" href="#">
+                <img src="https://peanuts.store/cdn/shop/files/Final_Logo_Color_-_Lockup_-_Horizontal_-_Dark-min_300x@2x.png?v=1689795143" alt="PEANUTS" class="navbar-brand-logo">
+            </a>
+            <button class="navbar-toggler border-white" type="button" data-bs-toggle="collapse" data-bs-target="#peanutsNav" aria-controls="peanutsNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="peanutsNav">
+               <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="products.html">Merchandise</a></li>
+                    <li class="nav-item"><a class="nav-link" href="orders.html">Orders</a></li>
+                    <li class="nav-item"><a class="nav-link" href="sales.html">Activities & Sales</a></li>
+                    <li class="nav-item"><a class="nav-link text-danger" href="index.html">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container my-5 flex-grow-1">
+        <header class="mb-5 border-bottom border-dark pb-3 d-flex justify-content-between align-items-end flex-wrap">
+            <div>
+                <span class="text-uppercase small fw-bold tracking-wider text-muted">Showcase</span>
+                <h1 class="display-5 fw-bold mt-1 mb-0">Current Merchandise Storefront</h1>
+            </div>
+            <button class="btn btn-custom px-4 py-2 mt-3 mt-sm-0" data-bs-toggle="modal" data-bs-target="#addMerchandiseModal">
+                <i class="fa-solid fa-plus me-2"></i> Add Merchandise
+            </button>
+        </header>
+
+        <section class="row g-4" id="product-grid-container">
+        </section>
+    </main>
+
+    <div class="modal fade" id="addMerchandiseModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title h5 fw-bold mb-0 peanuts-font">Add New Merchandise</h2>
+                    <button type="button" class="btn-close-custom px-2" data-bs-dismiss="modal">✕</button>
+                </div>
+                <form id="addMerchandiseForm">
+                    <div class="modal-body p-4">
+                        <div class="mb-3">
+                            <label class="form-label text-uppercase small fw-bold">Product Name</label>
+                            <input type="text" id="newProdName" class="form-control" required placeholder="e.g., Snoopy Mug">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-uppercase small fw-bold">Category Class</label>
+                            <select id="newProdCategory" class="form-select" required>
+                                <option value="" disabled selected>Select category</option>
+                                <option value="Apparel">Apparel</option>
+                                <option value="Accessories">Accessories</option>
+                                <option value="Collectibles">Collectibles</option>
+                                <option value="Home & Living">Home & Living</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-uppercase small fw-bold">Price (RM)</label>
+                                <input type="number" id="newProdPrice" class="form-control" step="0.01" required placeholder="0.00">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-uppercase small fw-bold">Initial Stock</label>
+                                <input type="number" id="newProdStock" class="form-control" required placeholder="0">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label text-uppercase small fw-bold">Product Image URL</label>
+                            <input type="url" id="newProdImage" class="form-control" placeholder="https://..." required>
+                        </div>
+                    </div>
+                    <div class="modal-footer p-3 border-top border-dark">
+                        <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-custom px-4">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editStockModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #FFCC00;">
+                    <h2 class="modal-title h5 fw-bold mb-0 peanuts-font">Update Product Stock</h2>
+                    <button type="button" class="btn-close-custom px-2" data-bs-dismiss="modal">✕</button>
+                </div>
+                <form id="editStockForm">
+                    <div class="modal-body p-4">
+                        <input type="hidden" id="editStockProductId">
+                        <div class="mb-3">
+                            <label class="form-label text-uppercase small fw-bold text-muted">Product Name</label>
+                            <input type="text" id="editStockProductName" class="form-control bg-light" readonly style="border-style: dashed;">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-uppercase small fw-bold">New Stock Quantity</label>
+                            <input type="number" id="editStockQuantity" class="form-control" min="0" required placeholder="Enter updated stock count">
+                        </div>
+                    </div>
+                    <div class="modal-footer p-3 border-top border-dark">
+                        <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-custom px-4 bg-warning text-dark border-dark">Save New Stock 💾</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-4 border-top border-dark bg-white mt-auto">
+        <div class="container text-center">
+            <p class="mb-1 small fw-bold text-uppercase tracking-wider peanuts-font">&copy; Anis Farhana merch PLATFORM | IMS566 DEVELOPMENT</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="js/data.js"></script>
+    
+    <script>
+        function getDataset() {
+            if (window.productsDataset) return window.productsDataset;
+            if (typeof productsDataset !== 'undefined') return productsDataset;
+            return [];
+        }
+
+        function renderProducts() {
+            const gridContainer = document.getElementById('product-grid-container');
+            const currentData = getDataset();
+            let htmlGridString = "";
+
+            if (!currentData || currentData.length === 0) {
+                gridContainer.innerHTML = `<div class="col-12 text-center my-5 text-muted text-uppercase fw-bold">No merchandise available. Add one above!</div>`;
+                return;
+            }
+
+            currentData.forEach(product => {
+                let stockBadge = `<span class="badge badge-stock mb-2 align-self-start">In Stock (${product.stock} left)</span>`;
+                if(product.stock <= 5) {
+                    stockBadge = `<span class="badge bg-warning text-dark border border-dark rounded-0 mb-2 align-self-start">⚠️ Low Stock (${product.stock} left)</span>`;
+                }
+
+                htmlGridString += `
+                    <div class="col-sm-6 col-md-4 col-lg-3" id="product-card-${product.id}">
+                        <div class="card card-minimalist h-100 position-relative">
+                            
+                            <div class="position-absolute end-0 top-0 d-flex" style="z-index: 10;">
+                                <button onclick="bukaModalEdit(${product.id})" 
+                                        class="btn btn-warning btn-sm rounded-0 border border-dark shadow-sm" 
+                                        style="font-size: 0.75rem; padding: 4px 8px;" 
+                                        title="Update Stock">
+                                    <i class="fa-solid fa-pencil"></i>
+                                </button>
+                                
+                                <button onclick="deleteProduct(${product.id})" 
+                                        class="btn btn-danger btn-sm rounded-0 border border-dark shadow-sm" 
+                                        style="font-size: 0.75rem; padding: 4px 8px;" 
+                                        title="Delete Product">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
+
+                            <div class="product-image-frame">
+                                <img src="${product.image}" alt="${product.name}" class="product-img-element" onerror="this.src='https://placehold.co/240x240?text=No+Image'">
+                            </div>
+                            <div class="card-body p-3 d-flex flex-column">
+                                ${stockBadge}
+                                <h3 class="h5 fw-bold mb-1" style="font-size: 1.05rem; line-height: 1.3;">${product.name}</h3>
+                                <p class="text-muted small flex-grow-1 mb-3">Official stock item from ${product.category} class.</p>
+                                <div class="d-flex justify-content-between align-items-center mt-auto">
+                                    <div class="fw-bold fs-5 peanuts-font">RM ${parseFloat(product.price).toFixed(2)}</div>
+                                    <span class="text-muted small fw-bold" style="font-size: 0.75rem;">ID: ${product.id}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            gridContainer.innerHTML = htmlGridString;
+        }
+
+        function bukaModalEdit(id) {
+            const currentData = getDataset();
+            const targetProduct = currentData.find(p => p.id === id);
+            
+            if (targetProduct) {
+                document.getElementById('editStockProductId').value = targetProduct.id;
+                document.getElementById('editStockProductName').value = targetProduct.name;
+                document.getElementById('editStockQuantity').value = targetProduct.stock;
+                
+                const modalEdit = new bootstrap.Modal(document.getElementById('editStockModal'));
+                modalEdit.show();
+            }
+        }
+
+        function deleteProduct(id) {
+            let currentData = getDataset();
+            const targetProduct = currentData.find(p => p.id === id);
+            if (!targetProduct) return;
+
+            if (confirm(`Are you sure you want to delete "${targetProduct.name}"?`)) {
+                let updatedData = currentData.filter(p => p.id !== id);
+                
+                if (window.productsDataset) window.productsDataset = updatedData;
+                else productsDataset = updatedData;
+
+                if (window.salesDataset) {
+                    window.salesDataset = window.salesDataset.filter(s => s.productId !== id);
+                }
+
+                if (typeof window.saveToLocalStorage === 'function') {
+                    window.saveToLocalStorage();
+                } else {
+                    localStorage.setItem('productsDataset', JSON.stringify(updatedData));
+                }
+                
+                renderProducts();
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', function() {
+            renderProducts();
+
+            // SUBMIT LOGIC: Form 2 (Save Updated Stock Values)
+            const editStockForm = document.getElementById('editStockForm');
+            if (editStockForm) {
+                editStockForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const pid = parseInt(document.getElementById('editStockProductId').value);
+                    const newQty = parseInt(document.getElementById('editStockQuantity').value);
+                    
+                    let currentData = getDataset();
+                    const productIndex = currentData.findIndex(p => p.id === pid);
+                    
+                    if (productIndex !== -1) {
+                        currentData[productIndex].stock = newQty;
+                        
+                        if (typeof window.saveToLocalStorage === 'function') {
+                            window.saveToLocalStorage();
+                        } else {
+                            localStorage.setItem('productsDataset', JSON.stringify(currentData));
+                        }
+                        
+                        renderProducts();
+                        
+                        const modalEl = document.getElementById('editStockModal');
+                        const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                        if (modalInstance) modalInstance.hide();
+                        
+                        alert("Success! The product stock level has been updated.");
+                    }
+                });
+            }
+
+            const addForm = document.getElementById('addMerchandiseForm');
+            if(addForm) {
+                addForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    let currentData = getDataset();
+                    const name = document.getElementById('newProdName').value;
+                    const category = document.getElementById('newProdCategory').value;
+                    const price = parseFloat(document.getElementById('newProdPrice').value);
+                    const stock = parseInt(document.getElementById('newProdStock').value);
+                    const image = document.getElementById('newProdImage').value;
+
+                    const nextId = currentData.length > 0 ? Math.max(...currentData.map(p => p.id || 0)) + 1 : 1;
+
+                    const newProduct = {
+                        id: nextId,
+                        name: name,
+                        category: category,
+                        price: price,
+                        stock: stock,
+                        icon: "fa-box",
+                        color: "#000000",
+                        image: image
+                    };
+
+                    currentData.push(newProduct);
+                    
+                    if (window.salesDataset) {
+                        window.salesDataset.push({ productId: nextId, unitsSold: 0 });
+                    }
+
+                    if (typeof window.saveToLocalStorage === 'function') {
+                        window.saveToLocalStorage();
+                    } else {
+                        localStorage.setItem('productsDataset', JSON.stringify(currentData));
+                    }
+                    
+                    renderProducts();
+                    addForm.reset();
+
+                    const modalElement = document.getElementById('addMerchandiseModal');
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    if (modalInstance) modalInstance.hide();
+
+                    alert(`"${name}" was added successfully!`);
+                });
+            }
+        });
+    </script>
+	<script src="auth.js"></script>
+	<script src="data.js"></script>
+</body>
+</html>
